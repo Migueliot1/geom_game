@@ -41,8 +41,8 @@ class Point:
 
     def distance_from_point(self, x, y):
         # basically finding a hypotenuse of a triangle created by two points
-        side1 = abs(self.x - x)
-        side2 = abs(self.y - y)
+        side1 = self.x - x
+        side2 = self.y - y
         hyp = math.sqrt(side1 ** 2 + side2 ** 2)
 
         return hyp
@@ -55,4 +55,4 @@ print ('x:', point1.x)
 print('y:', point1.y)
 
 point2 = Point(4, 3)
-print('distance:', point1.distance(point2.x, point2.y))
+print('distance:', point1.distance_from_point(point2.x, point2.y))
