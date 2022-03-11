@@ -27,11 +27,19 @@ class Point:
 
         return False
 
-    def show(self):
+    def show_coords(self):
         print('x:', self.x)
         print('y:', self.y)
 
-    def distance(self, x, y):
+    def falls_in_rectangle(self, lowleft_t, upright_t):
+        # lowleft_t and upright_t are tuples with (x, y) values
+        if lowleft_t[0] < self.x < upright_t[0] \
+        and lowleft_t[1] < self.y < upright_t[1]:
+            return True
+        else:
+            return False
+
+    def distance_from_point(self, x, y):
         # basically finding a hypotenuse of a triangle created by two points
         side1 = abs(self.x - x)
         side2 = abs(self.y - y)
