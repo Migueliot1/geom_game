@@ -65,6 +65,14 @@ class Rectangle:
         else:
             return False
 
+    # calculating area of the rectangle
+    def area(self):
+        
+        if self.is_defect():
+            return None
+        
+        return (self.upright.x - self.lowleft.x) * (self.upright.y - self.lowleft.y)
+
 
 # DEBUG
 point1 = Point(2, 2)
@@ -87,3 +95,8 @@ print('rectangle_error lowleft x:', rectangle_error.lowleft.x)
 print('rectangle_error upright y:', rectangle_error.upright.y)
 print('is rectangle_error defect?', rectangle_error.is_defect())
 print('is rectanglex defect?', rectanglex.is_defect())
+
+print('area of rectanglex:', rectanglex.area())
+
+rectangle0 = Rectangle(Point(5, 10), Point(10, 15))
+print('area of rectangle0:', rectangle0.area())
