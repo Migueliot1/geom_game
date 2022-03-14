@@ -1,5 +1,6 @@
 import math
-import random
+from random import randint
+import turtle
 
 # class Point contains x and y coordinates
 class Point:
@@ -30,8 +31,8 @@ class Point:
         if type(rectangle) != Rectangle:
             return None
 
-        if rectangle.lowleft.x <= self.x <= rectangle.upright.x \
-        and rectangle.lowleft.y <= self.y <= rectangle.upright.y:
+        if rectangle.point1.x <= self.x <= rectangle.point2.x \
+        and rectangle.point1.y <= self.y <= rectangle.point2.y:
             return True
         else:
             return False
@@ -75,4 +76,94 @@ class Rectangle:
         return (self.point2.x - self.point1.x) * (self.point2.y - self.point1.y)
 
 
+# Rectangle child class which can draw rectangles on a canvas
+class GuiRectangle(Rectangle):
+
+    def draw(self, canvas):
+        
+        if type(canvas) != turtle.Turtle:
+            return
+        
+        canvas.penup()
+        canvas.goto(self.point1.x, self.point1.y)
+        canvas.pendown()
+
+        move_in_x = self.point1.x - self.point2.x
+        canvas.forward(move_in_x)
+
+        left = False
+        right = False
+        # Check to know where to turn - to right or to left
+        # and remember what turn it was so turtle will turn without checks
+        if self.point1.y > self.point2.y:
+            if move_in_x > 0:
+                canvas.left(90)
+                left = True
+            else:
+                canvas.right(90)
+                right = True
+        else:
+            if move_in_x > 0:
+                canvas.right(90)
+                right = True
+            else:
+                canvas.left(90)
+                left = True
+        
+        move_in_y = self.point1.y - self.point2.y
+        canvas.forward(move_in_y)
+
+        # Check where to turn
+        if left:
+            canvas.left(90)
+        elif right:
+            canvas.right(90)
+
+        canvas.forward(move_in_x)
+
+        # Check where to turn
+        if left:
+            canvas.left(90)
+        elif right:
+            canvas.right(90)
+
+        canvas.forward(move_in_y)
+
+    def showPoint(self, point, canvas):
+        if type(canvas) != turtle.Turtle and type(point) != Point:
+            return
+        
+        canvas.penup()
+        canvas.goto(point.x, point.y)
+        canvas.pendown()
+
+
 # DEBUG
+# Create rectangle object
+# rectangle = Rectangle(Point(randint(0, 400), randint(0, 400)),
+#                     Point(randint(10, 400), randint(10, 400)))
+
+# # Print rectangle object
+# print("Rectangle Coordinates: ",
+#     rectangle.point1.x, ",",
+#     rectangle.point1.y, "and",
+#     rectangle.point2.x, ",",
+#     rectangle.point2.y)
+
+# Get point and an area from user
+user_x = float(input('Guess x: '))
+user_y = float(input('Guess y: '))
+user_point = Point(user_x, user_y)
+
+# user_area = float(input('Guess rectangle area: '))
+
+# # Print out the game result
+# print('Your point was inside rectangle:', user_point.falls_in_rectangle(rectangle))
+# print('Your area was off by:', rectangle.area() -  user_area)
+
+gui = GuiRectangle(Point(randint(0, 400), randint(0, 400)),
+                Point(randint(10, 400), randint(10, 400)))
+myturtle = turtle.Turtle()
+gui.draw(myturtle)
+gui.showPoint(user_point, myturtle)
+turtle.done()
