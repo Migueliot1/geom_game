@@ -88,46 +88,12 @@ class GuiRectangle(Rectangle):
         canvas.goto(self.point1.x, self.point1.y)
         canvas.pendown()
 
-        move_in_x = self.point1.x - self.point2.x
-        canvas.forward(move_in_x)
+        # Moving to second point
+        canvas.goto(self.point2.x, self.point1.y)
+        canvas.goto(self.point2.x, self.point2.y)
+        canvas.goto(self.point1.x, self.point2.y)
+        canvas.goto(self.point1.x, self.point1.y)
 
-        left = False
-        right = False
-        # Check to know where to turn - to right or to left
-        # and remember what turn it was so turtle will turn without checks
-        if self.point1.y > self.point2.y:
-            if move_in_x > 0:
-                canvas.left(90)
-                left = True
-            else:
-                canvas.right(90)
-                right = True
-        else:
-            if move_in_x > 0:
-                canvas.right(90)
-                right = True
-            else:
-                canvas.left(90)
-                left = True
-        
-        move_in_y = self.point1.y - self.point2.y
-        canvas.forward(move_in_y)
-
-        # Check where to turn
-        if left:
-            canvas.left(90)
-        elif right:
-            canvas.right(90)
-
-        canvas.forward(move_in_x)
-
-        # Check where to turn
-        if left:
-            canvas.left(90)
-        elif right:
-            canvas.right(90)
-
-        canvas.forward(move_in_y)
 
     def showPoint(self, point, canvas):
         if type(canvas) != turtle.Turtle and type(point) != Point:
