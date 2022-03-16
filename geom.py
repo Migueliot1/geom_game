@@ -94,14 +94,17 @@ class GuiRectangle(Rectangle):
         canvas.goto(self.point1.x, self.point2.y)
         canvas.goto(self.point1.x, self.point1.y)
 
+class GuiPoint(Point):
 
-    def showPoint(self, point, canvas):
-        if type(canvas) != turtle.Turtle and type(point) != Point:
+    def draw(self, canvas, size=5, color='red'):
+
+        if type(canvas) != turtle.Turtle:
             return
         
         canvas.penup()
-        canvas.goto(point.x, point.y)
+        canvas.goto(self.x, self.y)
         canvas.pendown()
+        canvas.dot(size, color)
 
 
 # DEBUG
@@ -119,7 +122,7 @@ class GuiRectangle(Rectangle):
 # Get point and an area from user
 user_x = float(input('Guess x: '))
 user_y = float(input('Guess y: '))
-user_point = Point(user_x, user_y)
+user_point = GuiPoint(user_x, user_y)
 
 # user_area = float(input('Guess rectangle area: '))
 
@@ -127,9 +130,11 @@ user_point = Point(user_x, user_y)
 # print('Your point was inside rectangle:', user_point.falls_in_rectangle(rectangle))
 # print('Your area was off by:', rectangle.area() -  user_area)
 
-gui = GuiRectangle(Point(randint(0, 400), randint(0, 400)),
+guiRect = GuiRectangle(Point(randint(0, 400), randint(0, 400)),
                 Point(randint(10, 400), randint(10, 400)))
 myturtle = turtle.Turtle()
-gui.draw(myturtle)
-gui.showPoint(user_point, myturtle)
+guiRect.draw(myturtle)
+
+user_point.draw(myturtle, 10)
+
 turtle.done()
