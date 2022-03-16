@@ -6,9 +6,24 @@ from geom import Point, GuiPoint, GuiRectangle
 myturtle = turtle.Turtle()
 
 # Get point and an area from user
-user_x = float(input('Guess x: '))
-user_y = float(input('Guess y: '))
-user_area = float(input('Guess rectangle area: '))
+er_msg = 'Wrong input. Assigning {} to default value of 0.'
+try:
+    user_x = float(input('Guess x: '))
+except:
+    print(er_msg.format('user_x'))
+    user_x = 0
+
+try:
+    user_y = float(input('Guess y: '))
+except:
+    print(er_msg.format('user_y'))
+    user_y = 0
+
+try:
+    user_area = float(input('Guess rectangle area: '))
+except:
+    print(er_msg.format('user_area'))
+    user_area = 0
 
 # Create a point out of user's input and a randomly generated rectangle
 user_point = GuiPoint(user_x, user_y)
